@@ -1,0 +1,37 @@
+spring:
+  profiles:
+    active: default
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/orcl.ad.aricent.com
+    username: "sys as sysdba"
+    password: Passw0rd123
+  flyway:
+    enabled: true
+    baselineOnMigrate: true
+    validate-on-migrate: true
+    table: ${schema}_dbcr_migration_history
+    supported_catagory:
+    locations: "filesystem:migration/${schema}/common,filesystem:migration/${schema}/${environment}"
+#    locations: "filesystem:migration/${schema}/test"
+    # showLastInfo: Number of of records to be shown as part of info. -1 to show all.
+    showLastInfo: 20
+    placeholders:
+      issuePrefix: "NTSAU-"
+      gitPingUrl: "git ls-remote --heads -q"
+      gitLogUrl: "git log -n 1 -s --format='%ae'"
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+proxy:
+  enabled: false
+  host: tpaproxy.verizon.com
+  port: 80
+logging:
+  level:
+    org.springframework: info
